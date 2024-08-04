@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:eventer_main/eventfeedpage.dart' show EventFeedPage;
+import 'package:eventer_main/loginpage.dart' show LoginPage;
 
 void main() {
   runApp(const MyApp());
@@ -30,40 +32,55 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
-  void _onBottomItemTapped(int index) {
+  var _loggedin = false;
+
+  void onBottomItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
     });
   }
-  void _onMakeButtonPressed() {
+
+  void onProfilePhotoTapped() {
+    setState(() {
+      _selectedIndex = 4;
+    });
+  }
+
+  void onMakeButtonPressed() {
     print("make button pressed");
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    var makeButtonText = "Make";
-    switch (_selectedIndex) {
-      case 0:
-        page = EventFeedPage();
-        makeButtonText = "Make Event";
-        break;
-      case 1:
-        page = Placeholder();
-        makeButtonText = "Make Org";
-        break;
-      case 2:
-        page = Placeholder();
-        makeButtonText = "Make Org";
-        break;
-      case 3:
-        page = Placeholder();
-        makeButtonText = "Make Org";
-        break;
-      default:
-        throw UnimplementedError('no widget for $_selectedIndex');
+    if (_selectedIndex == 4) {
+      return LoginPage(onBackArrowPressed: ()=>onBottomItemTapped(1),);
     }
+    return MyHomePageScaffold(
+      selectedIndex: _selectedIndex, 
+      onBottomItemTapped: onBottomItemTapped, 
+      onProfilePhotoTapped: onProfilePhotoTapped, 
+      onMakeButtonPressed: onMakeButtonPressed,
+      );
+  }
+}
 
+class MyHomePageScaffold extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onBottomItemTapped;
+  final VoidCallback onProfilePhotoTapped;
+  final VoidCallback onMakeButtonPressed;
+
+  const MyHomePageScaffold({
+    super.key,
+    required this.selectedIndex,
+    required this.onBottomItemTapped,
+    required this.onProfilePhotoTapped,
+    required this.onMakeButtonPressed,
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     final appBarTitleStyle = theme.textTheme.displaySmall!.copyWith(
@@ -71,54 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
       fontFamily: 'LemonShakeShake',
     );
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
-        child: AppBar(
-          titleSpacing: 0.0,
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: CircleAvatar(
-                    radius: 30.0,
-                    backgroundImage: NetworkImage('https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp'),
-                  ),
-                ),
-                const SizedBox(width: 30.0),
-                Text("Eventer", style: appBarTitleStyle,),
-              ],
-            ),
-          ),
-          backgroundColor: theme.colorScheme.primary,
-          toolbarHeight: 80,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PreferredSize(
-                preferredSize: const Size.fromWidth(60.0),
-                child:
-                  (_selectedIndex == 0 || _selectedIndex == 1) ?
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.add_circle),
-                    onPressed: _onMakeButtonPressed, 
-                    label: Text(makeButtonText))
-                  : Container(),
-              )
-            ),
-          ],
-        ),
-      ),
-      body: Expanded(
-        child: Container(
-          color: theme.colorScheme.secondaryContainer,
-          child: page
-        )
-      ),
-      bottomNavigationBar: Material(
+    Widget buildBottomNavBar() {
+      if (selectedIndex == 4) {
+        return Container();
+      }
+      return Material(
         elevation: 20,
         child: Container(
           height: 100,
@@ -142,20 +116,86 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Settings',
               ),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: selectedIndex,
             selectedItemColor: theme.colorScheme.primary,
-            onTap: _onBottomItemTapped,
+            onTap: onBottomItemTapped,
           ),
         ),
+      );
+    }
+
+    Widget page;
+    var makeButtonText = "Make";
+    switch (selectedIndex) {
+      case 0:
+        page = EventFeedPage();
+        makeButtonText = "Make Event";
+        break;
+      case 1:
+        page = Placeholder();
+        makeButtonText = "Make Org";
+        break;
+      case 2:
+        page = Placeholder();
+        makeButtonText = "Make Org";
+        break;
+      case 3:
+        page = Placeholder();
+        makeButtonText = "Make Org";
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80.0),
+        child: AppBar(
+          titleSpacing: 0.0,
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: InkWell(
+                    onTap: onProfilePhotoTapped,
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage: NetworkImage('https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp'),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+                Text("Eventer", style: appBarTitleStyle,),
+              ],
+            ),
+          ),
+          backgroundColor: theme.colorScheme.primary,
+          toolbarHeight: 80,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 7.0),
+              child:
+                  (selectedIndex == 0 || selectedIndex == 1) ?
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.add_circle),
+                    onPressed: onMakeButtonPressed, 
+                    label: Text(makeButtonText))
+                  : Container(),
+              )
+          ],
+        ),
       ),
+      body: Expanded(
+        child: Container(
+          color: theme.colorScheme.secondaryContainer,
+          child: page
+        )
+      ),
+      bottomNavigationBar: buildBottomNavBar(),
     );
   }
 }
 
-class EventFeedPage extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-      return Container();
-  }
-}
