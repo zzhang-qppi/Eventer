@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
-  var _loggedin = false;
+  final _loggedin = false;
 
   void onBottomItemTapped(int index) {
       setState(() {
@@ -94,7 +94,7 @@ class MyHomePageScaffold extends StatelessWidget {
       }
       return Material(
         elevation: 20,
-        child: Container(
+        child: SizedBox(
           height: 100,
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -128,19 +128,19 @@ class MyHomePageScaffold extends StatelessWidget {
     var makeButtonText = "Make";
     switch (selectedIndex) {
       case 0:
-        page = EventFeedPage();
+        page = const EventFeedPage();
         makeButtonText = "Make Event";
         break;
       case 1:
-        page = Placeholder();
+        page = const Placeholder();
         makeButtonText = "Make Org";
         break;
       case 2:
-        page = Placeholder();
+        page = const Placeholder();
         makeButtonText = "Make Org";
         break;
       case 3:
-        page = Placeholder();
+        page = const Placeholder();
         makeButtonText = "Make Org";
         break;
       default:
@@ -161,7 +161,7 @@ class MyHomePageScaffold extends StatelessWidget {
                   padding: const EdgeInsets.all(0.0),
                   child: InkWell(
                     onTap: onProfilePhotoTapped,
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 30.0,
                       backgroundImage: NetworkImage('https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp'),
                     ),
