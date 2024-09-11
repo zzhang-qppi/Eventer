@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eventer_main/eventfeedpage.dart' show EventFeedPage;
 import 'package:eventer_main/loginpage.dart' show LoginPage;
+import 'package:eventer_main/organizationpage.dart' show OrganizationPage;
 
 void main() {
   runApp(const MyApp());
@@ -132,7 +133,7 @@ class MyHomePageScaffold extends StatelessWidget {
         makeButtonText = "Make Event";
         break;
       case 1:
-        page = const Placeholder();
+        page = const OrganizationPage();
         makeButtonText = "Make Org";
         break;
       case 2:
