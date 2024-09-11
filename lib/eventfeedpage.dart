@@ -5,33 +5,35 @@ class EventFeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return const Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Happening Right Now"),
-              ),
-              
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30, top: 10),
-            child: Row(
-              children: [
-                EventHappeningNow(),
-                SizedBox(width: 50,),
-                EventHappeningNow(),
-                SizedBox(width: 50,),
-                EventHappeningNow(),
-                ],
+      return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Happening Right Now"),
                 ),
-          )
-          
-          ],
-      );
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                height: 260,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    EventHappeningNow(),
+                    SizedBox(width: 30,),
+                    EventHappeningNow(),
+                    SizedBox(width: 30,),
+                    EventHappeningNow(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+        );
   }
 }
 
