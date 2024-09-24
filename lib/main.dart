@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:eventer_main/eventfeedpage.dart' show EventFeedPage;
 import 'package:eventer_main/loginpage.dart' show LoginPage;
 import 'package:eventer_main/organizationpage.dart' show OrganizationPage;
+import 'package:eventer_main/notificationpage.dart' show NotificationPage;
 
 void main() {
   runApp(const MyApp());
@@ -137,7 +138,7 @@ class MyHomePageScaffold extends StatelessWidget {
         makeButtonText = "Make Org";
         break;
       case 2:
-        page = const Placeholder();
+        page = const NotificationPage();
         makeButtonText = "Make Org";
         break;
       case 3:
@@ -189,12 +190,11 @@ class MyHomePageScaffold extends StatelessWidget {
           ],
         ),
       ),
-      body: Expanded(
-        child: Container(
-          color: theme.colorScheme.secondaryContainer,
-          child: page
-        )
-      ),
+      body: Container(
+        width: double.infinity,
+        color: theme.colorScheme.secondaryContainer,
+        child: page
+        ),
       bottomNavigationBar: buildBottomNavBar(),
     );
   }

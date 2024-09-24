@@ -63,6 +63,9 @@ flutter:
     - family: LemonShakeShake
       fonts:
         - asset: assets/fonts/LemonShakeShake.ttf
+  assets:
+    - assets/images/
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
